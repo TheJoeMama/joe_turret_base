@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "sam_mats/missilepods_norm"
+	"$vertexalpha" 1
+}

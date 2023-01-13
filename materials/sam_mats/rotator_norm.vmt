@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "sam_mats/rotator_norm"
+	"$vertexalpha" 1
+}
