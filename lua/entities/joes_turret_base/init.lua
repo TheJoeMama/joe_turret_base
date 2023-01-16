@@ -134,8 +134,6 @@ end
 
 function ENT:Think()
 	self:NextThink(CurTime())
-	self:HandleActive()
-	self:HandleWeapons()
 	
 	if not self.ai and self:GetAIEnabled() then
 		self.ai = true
@@ -181,17 +179,7 @@ function ENT:Think()
 end
 
 function ENT:HandleWeapons(Fire1, Fire2)
-	local Driver = self:GetDriver()
-	
-	if IsValid( Driver ) then
-		if Driver:KeyDown( IN_ATTACK ) then
-			self:PrimaryFire()
-		end
-		
-		if Driver:KeyDown( IN_ATTACK2 ) then
-			self:SecondaryFire()
-		end
-	end
+	return
 end
 
 function ENT:SecondaryFire()
@@ -308,11 +296,10 @@ function ENT:SweepEnt(ent)
 	end
     local reps = 500
 	self.newAng = self.newAng or 180
-    local ratio = 0
     local startAngle = ent:GetAngles()
     self.sweependAngle = self.sweependAngle or Angle(startAngle.x,(startAngle.y + self.newAng),startAngle.z)
 
-	ratio = ratio + (5 / reps)
+	local ratio =  (5 / reps)
 	local lerp = LerpAngle(ratio, startAngle, self.sweependAngle)
 	ent:SetAngles(lerp)
 	self.BARRELS:SetAngles(lerp)
@@ -458,8 +445,6 @@ function ENT:Track(target)
     local ang = ((enemyPos) - self.BARRELS:GetPos()):Angle()
 
     local reps = 10
-    local delay = 1 / 1000
-    local ratio = 0
     local startAngle = self.BARRELS:GetAngles()
     if self.reverseForward then
         ang.y = ang.y + 180
@@ -474,7 +459,7 @@ function ENT:Track(target)
         endAngle = Angle(ang.x,ang.y,ang.z)
     end
 	
-	ratio = ratio + (1 / reps)
+	local ratio = (1 / reps)
 	local lerp = LerpAngle(ratio, startAngle, endAngle)
 	self.SENT:SetAngles(Angle(0,lerp.y,lerp.r))
 	self.BARRELS:SetAngles(lerp)
@@ -493,12 +478,10 @@ function ENT:ReturnViewToNormal()
 
     local ang = ((self:GetPos() ) - self.SENT:GetPos()):Angle()
     local reps = 40
-    local delay = 0.1 / reps
-    local ratio = 0
     local startAngle = self.BARRELS:GetAngles()
     local endAngle = Angle(0,ang.y,0)
 
-	ratio = ratio + (1 / reps)
+	local ratio = (1 / reps)
 	local lerp = LerpAngle(ratio, startAngle, endAngle)
 	self.SENT:SetAngles(Angle(0,lerp.y,lerp.r))
 	self.BARRELS:SetAngles(lerp)
