@@ -407,7 +407,7 @@ function ENT:HandleTargeting()
 					nofurtheraction = true
 				end
 
-				if nofurtheraction == false and ( ent.GetHP and ( self.target:GetHP() <= 0 ) ) then
+				if nofurtheraction == false and ( self.target.GetHP and ( self.target:GetHP() <= 0 ) ) then
 					self.target = nil
 					self.HasTarget = false
 					self:ReturnViewToNormal()
