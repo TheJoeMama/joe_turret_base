@@ -129,6 +129,7 @@ function ENT:OnSpawn()
 	self.BARRELS:Spawn()
 	self.BARRELS:Activate()
 	self.BARRELS:SetParent(self)
+	self.BARRELS:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 
 end
 
