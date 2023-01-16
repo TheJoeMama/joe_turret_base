@@ -135,29 +135,27 @@ end
 
 function ENT:Think()
 	self:NextThink(CurTime())
-	
-	if not self.ai and self:GetAIEnabled() then
+	local aistate = self:GetAIEnabled()
+
+	if not self.ai and aistate then
 		self.ai = true
 		self.nextT = 0
 	end
 	
-	if self.ai and not self:GetAIEnabled() then
+	if self.ai and not aistate then
 		self.ai = false
 		self.target = nil
 		self.HasTarget = false
-		self.SENT:SetAngles(self:GetAngles())
-		self.BARRELS:SetAngles(self:GetAngles())
+		local ang = self:GetAngles()
+		self.SENT:SetAngles(ang)
+		self.BARRELS:SetAngles(ang)
 	end
 	
-	if self:GetAIEnabled() and IsValid(self:GetDriver()) then
-		self:SetAIEnabled(false)
-	end
-	
-	if self:GetAIEnabled() and IsValid(self) and IsValid(self.target) then
+	if aistate and IsValid(self) and IsValid(self.target) then
 		self:FireControl()
 	end
 
-	if self:GetAIEnabled() then
+	if aistate then
 		if self.returning then
 			self:ReturnViewToNormal()
 		end
