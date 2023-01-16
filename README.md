@@ -1,3 +1,4 @@
-# joe_turret_base
+# Joes Turret Base
 
-This is a turret for GMOD StarWarsRP, it is made for AI use and shoots locking rockets, at the moment only 1 Turret is available, more will be added later.
+This is a Turret (Base) for GMOD StarWarsRP, it is made for AI use and shoots locking rockets, at the moment only 1 Turret is available, more will be added later.
+Although this contains a Base, the layout is very restricting, meaning this is only good as a Base if your using a turret that has 3 moving parts(body,head,barrels) or use the same model(s) I use.
