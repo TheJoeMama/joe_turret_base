@@ -1,8 +1,8 @@
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 
-ENT.PrintName = "Nicks lfs turret base"
-ENT.Category = "[LFS] Nick's AI turrets"
+ENT.PrintName = "Joes LFS Turret Base"
+ENT.Category = "Joe | Turrets"
 
 DEFINE_BASECLASS( "lunasflightschool_basescript" )
 
@@ -10,25 +10,34 @@ ENT.Spawnable = false
 ENT.AdminSpawnable = false
 ENT.Editable = true
 
-ENT.PrintName = "base"
+ENT.model = "models/sam_model/base.mdl"
 
-ENT.model = "error.mdl"
-
-ENT.HideDriver = false
+ENT.HideDriver = true
 ENT.SeatPos = Vector(00,0,0)
 ENT.SeatAng = Angle(0,-90,0)
 
-ENT.MaxHealth = 500
+ENT.MaxHealth = 5000
 ENT.MaxShield = 0 --set 0 for no shield
-ENT.Range = 5000 --range at which it will see the target
+ENT.Range = 60000 --range at which it will see the target
 ENT.LoseTargetDistance = ENT.Range + 1000 --range at which it will lose the target
-ENT.Clip = 50 --ammount of ammo before reload, set to -1 for inf
-ENT.AA = true --is it anti-air
-ENT.AG = true --is it anti-ground
-ENT.AP =true --is it anti-personel
+ENT.Clip = 8 --ammount of ammo before reload, set to -1 for inf
 ENT.mass = 500
-ENT.team = 2 --0 friendly to all, 1 good guys, 2 bad guys, 3 hostile to all
-ENT.cone = true --should the turret search in a cone(true) or sphere(false)
+ENT.team = 1 --0 friendly to all, 1 good guys, 2 bad guys, 3 hostile to all
+
+ENT.targetgroundvehicles = true
+ENT.targetairvehicles = true
+ENT.targethumans = true
+
+ENT.BarrelPos = {
+	[1] = Vector(-22,30,4),
+	[2] = Vector(-22,21,4),
+	[3] = Vector(-22,30,-4),
+	[4] = Vector(-22,21,-4),
+	[5] = Vector(-22,-21,4),
+	[6] = Vector(-22,-30,4),
+	[7] = Vector(-22,-21,-4),
+	[8] = Vector(-22,-30,-4),
+}
 
 function ENT:SetupDataTables()
 
@@ -52,14 +61,13 @@ function ENT:SetupDataTables()
 
 	self:NetworkVar("Int",0, "AITEAM", { KeyName = "aiteam", Edit = { type = "Int", order = 1,min = 1, max = 3, category = "AI"} } )
 	self:NetworkVar("Float",0, "HP", { KeyName = "Health", Edit = { type = "Float", order = 0,min = 0, max = self.MaxHealth} } )
-	self:NetworkVar("Float",3, "Range", { KeyName = "range", Edit = { type = "Float", order = 5,min = 1, max = 50000} } )
+	self:NetworkVar("Float",3, "Range", { KeyName = "range", Edit = { type = "Float", order = 5,min = 100, max = 100000} } )
 	self:NetworkVar("Float",4, "LoseTargetDistance", { KeyName = "loseTargetDistance" } )
-	self:NetworkVar("Bool",11, "AntiAir", { KeyName = "antia-air", Edit = { type = "Boolean", order = 1, category = "Type"} } )
-	self:NetworkVar("Bool",12, "AntiGround", { KeyName = "anti-ground", Edit = { type = "Boolean", order = 1, category = "Type"} } )
-	self:NetworkVar("Bool",13, "AntiPersonel", { KeyName = "anti-personnel", Edit = { type = "Boolean", order = 1, category = "Type"} } )
+	self:NetworkVar("Bool",11, "TargetAir", { KeyName = "Target Air", Edit = { type = "Boolean", order = 1, category = "Type"} } )
+	self:NetworkVar("Bool",12, "TargetGround", { KeyName = "Target Vehicles", Edit = { type = "Boolean", order = 1, category = "Type"} } )
+	self:NetworkVar("Bool",13, "TargetHumans", { KeyName = "Target humans", Edit = { type = "Boolean", order = 1, category = "Type"} } )
 
 	self:NetworkVar("Bool",1, "AIEnabled", { KeyName = "AIenabled", Edit = { type = "Boolean", order = 1} } )
-	self:NetworkVar("Bool",15, "Cone", { KeyName = "cone(true)/sphere(false)", Edit = { type = "Boolean", order = 1} } )
 
 	if self.team == 0 then
 		self:SetAITEAM(3)
@@ -72,10 +80,9 @@ function ENT:SetupDataTables()
 	self:SetLoseTargetDistance(self.LoseTargetDistance)
 	self:SetAmmoPrimary(self.Clip)
 	self:SetAIEnabled(false)
-	self:SetCone(self.cone)
-	self:SetAntiAir(self.AA)
-	self:SetAntiGround(self.AG)
-	self:SetAntiPersonel(self.AP)
+	self:SetTargetAir(self.targetairvehicles)
+	self:SetTargetGround(self.targetgroundvehicles)
+	self:SetTargetHumans(self.targethumans)
 
 	if SERVER then
 		self:NetworkVarNotify( "Range", self.SetRangeStuff )
