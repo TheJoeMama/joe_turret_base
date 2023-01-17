@@ -69,7 +69,7 @@ function ENT:PrimaryFire()
 		self:SetAmmoPrimary(self.MaxAmmo)
 		self.barrelshotcounter = 0
 		self:EmitSound(Sound("ambient/levels/caves/ol04_gearengage.wav"), 120, math.random(90,110))
-		self.NextShoot = CurTime() + 5
+		self.NextShoot = CurTime() + self:GetReloadTime()
 		return
 	end
 	
@@ -77,8 +77,8 @@ function ENT:PrimaryFire()
     if self.reverseForward then
         dir = -self.BARRELS:GetForward():GetNormalized()
     end
-	self:EmitSound( "random_turrets/shoot.wav" )
-	self.NextShoot = CurTime() + 1
+	self:EmitSound( "weapons/rpg/rocketfire1.wav" )
+	self.NextShoot = CurTime() + self:GetShootInterval()
 	
 	self:SetAmmoPrimary(self:GetAmmoPrimary() - 1)
 	self.barrelshotcounter = self.barrelshotcounter + 1
@@ -94,6 +94,8 @@ function ENT:PrimaryFire()
 	ent:Spawn()
 	ent:Activate()
 	
+	util.ScreenShake( self:GetPos(), 2, 5, 1, 250 )
+
 	ent:SetAttacker( self )
 	ent:SetInflictor( self )
 	
@@ -375,6 +377,9 @@ function ENT:IsEntStillVisible(ent)
 		endpos = ent:LocalToWorld(ent:OBBCenter()),
 		filter = {self,self.BARRELS,self.SENT},
 	} )
+	if not IsValid(tr.Entity) then // fixed bug with players jumping
+		return true
+	end
 	return (tr.Hit and tr.Entity == ent)
 end
 
@@ -400,7 +405,7 @@ function ENT:HandleTargeting()
 					nofurtheraction = true
 				end
 
-				if nofurtheraction == false and (self.target:IsPlayer() and not self.target:Alive() )then
+				if nofurtheraction == false and (self.target:IsPlayer() and not self.target:Alive() ) then
 					self.target = nil
 					self.HasTarget = false
 					self:ReturnViewToNormal()

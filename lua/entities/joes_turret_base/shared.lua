@@ -60,6 +60,8 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "Float",8, "MaintenanceProgress" )
 
 	self:NetworkVar("Int",0, "AITEAM", { KeyName = "aiteam", Edit = { type = "Int", order = 1,min = 1, max = 3, category = "AI"} } )
+	self:NetworkVar("Int",1, "ShootInterval", { KeyName = "shootint", Edit = { type = "Int", order = 1,min = 1, max = 10, category = "Shooting"} } )
+	self:NetworkVar("Int",2, "ReloadTime", { KeyName = "reloadtime", Edit = { type = "Int", order = 1,min = 1, max = 20, category = "Shooting"} } )
 	self:NetworkVar("Float",0, "HP", { KeyName = "Health", Edit = { type = "Float", order = 0,min = 0, max = self.MaxHealth} } )
 	self:NetworkVar("Float",3, "Range", { KeyName = "range", Edit = { type = "Float", order = 5,min = 100, max = 100000} } )
 	self:NetworkVar("Float",4, "LoseTargetDistance", { KeyName = "loseTargetDistance" } )
@@ -74,6 +76,8 @@ function ENT:SetupDataTables()
 	else
 		self:SetAITEAM(self.team)
 	end
+	self:SetShootInterval(2)
+	self:SetReloadTime(10)
 	self:SetHP(self.MaxHealth)
 	self:SetShield(self.MaxShield)
 	self:SetRange(self.Range)
