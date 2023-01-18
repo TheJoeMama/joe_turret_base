@@ -6,13 +6,20 @@ Joe_Turret_Base.TargetBases = Joe_Turret_Base.TargetBases or {}
 local function AddTargetBase(name)
     Joe_Turret_Base.TargetBases[name] = true
 end
-
+// LFS
 AddTargetBase("lunasflightschool_basescript")
 AddTargetBase("lunasflightschool_basescript_heli")
 AddTargetBase("lunasflightschool_basescript_gunship")
 AddTargetBase("fighter_base")
 AddTargetBase("heracles421_lfs_base")
 AddTargetBase("speeder_base")
+
+// LVS
+AddTargetBase("lvs_base_fakehover")
+AddTargetBase("lvs_base_starfighter")
+AddTargetBase("lvs_base_repulsorlift")
+AddTargetBase("lvs_base")
+AddTargetBase("lvs_base_fighterplane")
 
 local function AddTargetClass(name)
     Joe_Turret_Base.TargetClasses[name] = true
