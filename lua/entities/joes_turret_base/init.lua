@@ -377,7 +377,6 @@ function ENT:IsEntStillVisible(ent)
 		endpos = ent:LocalToWorld(ent:OBBCenter()),
 		filter = {self,self.BARRELS,self.SENT},
 	} )
-	print(tr.Entity)
 	if not IsValid(tr.Entity) and not tr.HitWorld then // fixed bug with players jumping
 		return true
 	end
