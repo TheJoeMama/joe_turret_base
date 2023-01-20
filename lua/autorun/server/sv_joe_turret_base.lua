@@ -16,6 +16,7 @@ AddTargetBase("speeder_base")
 
 // LVS
 AddTargetBase("lvs_base_fakehover")
+AddTargetBase("lvs_walker_atte_hoverscript")
 AddTargetBase("lvs_base_starfighter")
 AddTargetBase("lvs_base_repulsorlift")
 AddTargetBase("lvs_base")

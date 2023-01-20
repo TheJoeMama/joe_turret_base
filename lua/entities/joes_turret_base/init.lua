@@ -324,7 +324,19 @@ function ENT:GetClosestTarget()
 			["lunasflightschool_basescript"] = true,
 			["lunasflightschool_basescript_heli"] = true,
 			["lunasflightschool_basescript_gunship"] = true,
-			["fighter_base"] = true
+			["fighter_base"] = true,
+			["lunasflightschool_basescript"] = true,
+			["lvs_base_repulsorlift"] = true,
+			["lvs_base_starfighter"] = true,
+			["lvs_base_fighterplane"] = true,
+			
+		}
+
+		local groundbases = {
+			["heracles421_lfs_base"] = true,
+			["speeder_base"] = true,
+			["lvs_walker_atte_hoverscript"] = true,
+			["lvs_base_fakehover"] = true,
 		}
 
 		local targetair = self:GetTargetAir()
@@ -338,8 +350,7 @@ function ENT:GetClosestTarget()
 			if not self:IsEntStillVisible(ent) then continue end
 
 			if airbases[ent.Base] and not targetair then continue end
-			if ent.Base == "heracles421_lfs_base" and not targetground then continue end
-			if ent.Base == "speeder_base" and targetground then continue end
+			if groundbases[ent.Base] and not targetground then continue end
 
 			local dist = ent:GetPos():DistToSqr(turretpos)
 			if dist > range then continue end
