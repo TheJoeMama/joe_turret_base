@@ -1,12 +1,15 @@
+if not LVS then return end
 ENT.Type = "anim"
-ENT.Base = "joes_turret_base"
+ENT.Base = "joes_turret_base_lvs"
 
-ENT.PrintName = "SAM Turret"
+ENT.PrintName = "[LVS] SAM Turret"
 ENT.Category = "Joe | Turrets"
 
 ENT.Spawnable = true
 ENT.AdminSpawnable = true
 ENT.Editable = true
+
+/*
 
 ENT.model = "models/sam_model/base.mdl"
 
@@ -25,3 +28,5 @@ ENT.targetairvehicles = true
 ENT.targethumans = true
 
 ENT.team = 1
+
+*/
