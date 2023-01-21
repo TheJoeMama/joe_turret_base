@@ -1,12 +1,12 @@
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 
-ENT.PrintName = "Joes LFS Turret Base"
+ENT.PrintName = "Joes LVS Turret Base"
 ENT.Category = "Joe | Turrets"
 
 DEFINE_BASECLASS( "lvs_base" )
 
-ENT.Spawnable = true
+ENT.Spawnable = false
 ENT.AdminSpawnable = false
 ENT.Editable = true
 

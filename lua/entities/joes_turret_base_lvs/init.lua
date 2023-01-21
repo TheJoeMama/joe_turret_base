@@ -86,22 +86,34 @@ function ENT:PrimaryFire()
 		self.barrelshotcounter = 1
 	end
 
-	local ent = ents.Create( "lunasflightschool_missile" )
+	local ent = ents.Create( "lvs_missile" )
 	ent:SetPos( self.BARRELS:LocalToWorld(self:GetBarrelShootPos()) )
 	ent:SetAngles( dir:Angle() )
 	ent:SetOwner( self )
-	ent.Attacker = self
 	ent:Spawn()
 	ent:Activate()
-	
+	ent.target = self.target
+	if IsValid( self.target ) then
+		ent:SetTarget( self.target )
+	end
+	ent:SetTurnSpeed(2)
+	ent.GetTarget = function(self) return self.target end
+	ent.GetTargetPos = function(self)
+		local Target = self.target
+
+		if not IsValid( Target ) then return Vector(0,0,0) end
+
+		if isfunction( Target.GetMissileOffset ) then
+			return Target:LocalToWorld( Target:GetMissileOffset() )
+		end
+
+		return Target:GetPos()
+	end
+	ent:SetAttacker(self)
+	ent:Enable()
+
 	util.ScreenShake( self:GetPos(), 2, 5, 1, 250 )
 
-	ent:SetAttacker( self )
-	ent:SetInflictor( self )
-	
-	if IsValid( self.target ) then
-		ent:SetLockOn( self.target )
-	end
 end
 
 function ENT:GetBarrelShootPos()
@@ -345,7 +357,7 @@ function ENT:GetClosestTarget()
 		for ent,_ in pairs(Joe_Turret_Base.Targets) do
 			if not IsValid(ent) then continue end
 			if ent.GetAITEAM != nil and (ent:GetAITEAM() == selfteam) then continue end
-			if ent:IsPlayer() and ( ( ent:lfsGetAITeam() == selfteam ) or (not targethuman) or (not ent:Alive()) ) then continue end
+			if ent:IsPlayer() and ( ( ent:lvsGetAITeam() == selfteam ) or (not targethuman) or (not ent:Alive()) ) then continue end
 			if ent.GetHP and ( ent:GetHP() <= 0 ) then continue end
 			if not self:IsEntStillVisible(ent) then continue end
 
@@ -388,6 +400,9 @@ function ENT:IsEntStillVisible(ent)
 		endpos = ent:LocalToWorld(ent:OBBCenter()),
 		filter = {self,self.BARRELS,self.SENT},
 	} )
+	if IsValid(tr.Entity) and ent.GetRearEntity and ent:GetRearEntity() == tr.Entity then
+		return true
+	end
 	if not IsValid(tr.Entity) and not tr.HitWorld then // fixed bug with players jumping
 		return true
 	end
