@@ -21,6 +21,7 @@ AddTargetBase("lvs_base_starfighter")
 AddTargetBase("lvs_base_repulsorlift")
 AddTargetBase("lvs_base")
 AddTargetBase("lvs_base_fighterplane")
+AddTargetBase("lvs_base_helicopter")
 
 local function AddTargetClass(name)
     Joe_Turret_Base.TargetClasses[name] = true

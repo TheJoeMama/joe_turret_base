@@ -341,7 +341,7 @@ function ENT:GetClosestTarget()
 			["lvs_base_repulsorlift"] = true,
 			["lvs_base_starfighter"] = true,
 			["lvs_base_fighterplane"] = true,
-			
+			["lvs_base_helicopter"] = true,
 		}
 
 		local groundbases = {
